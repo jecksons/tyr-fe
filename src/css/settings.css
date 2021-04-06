@@ -1,0 +1,87 @@
+:root
+{
+    --primary-color: #2596B1;
+	--primary-color-text: #fff;
+	--primary-color-text-focus: rgb(223, 223, 223);		
+    --primary-color-hover: #036379;
+	--primary-color-focus: #0487A6;	
+    --primary-color-border: #036379;    
+
+	--primary-color-2: #6FC2D5;
+	--primary-color-3: #45A9C1;
+	--primary-color-4: #0487A6;
+	--primary-color-5: #036379;
+	--secundary-color: #FFC030;
+	--secundary-color-hover: #C48800;
+	--secundary-color-border: #C48800;
+	--secundary-color-2: #FFD982;
+	--secundary-color-3: #FFCC56;
+	--secundary-color-4: #FFB100;
+	--secundary-color-5: #C48800;
+	--accent-color: #FFB100;
+	--accent-color-hover: #C48800;
+	--accent-color-border: #C48800;
+	--accent-color-text: #fff;
+
+	
+    --max-width: 1000px;
+    --header-height: 70px;
+	--header-height-small: 50px;
+	--form-title: #2596B1;
+	--form-title-hover: #036379;	
+	--form-label: #818181;
+	--input-border-color: #c9c9c9;
+	--primary-back-color: #FBFBFB;
+}
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+    font-family: Calibri, Helvetica, sans-serif;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+html, body{
+	height: 100%;		
+}
+body {
+	
+	line-height: 1;
+    display:flex; 
+    flex-direction:column; 
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}

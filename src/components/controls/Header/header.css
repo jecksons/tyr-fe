@@ -1,0 +1,327 @@
+header#header-main-home{
+    background: var(--primary-color-text);
+    color: var(--primary-color);        
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: var(--header-height);
+    align-items: center;
+    position: fixed;
+    top: 0;
+}
+
+
+header#header-main{
+    background: var(--primary-color);    
+    display: flex;
+    flex-direction: row;
+    height: var(--header-height);
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+}
+
+
+
+section#header-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;    
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-left: 10px;   
+    margin-right: 10px;   
+}
+
+section#header-section a{
+    text-decoration: none;    
+}
+
+
+section#header-section div#menu{
+    display: flex;
+    flex-direction: row;    
+    align-items: center;
+}
+
+section#header-section div#menu .logo{
+    height: 60px;
+}
+
+section#header-section div#menu button#btn-menu{
+    background: none;
+    outline: 0;
+    cursor: pointer;
+    color: var(--primary-color);
+    border: 0;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header#header-main section#header-section div#menu button#btn-menu{
+    color: var(--primary-color-text);
+}
+
+
+section#header-section div#menu button#btn-menu:hover{
+    padding: 5px;
+    border: 1px solid rgb(241, 241, 241);    
+    border-radius: 100%;
+    background: rgb(241, 241, 241);
+}
+
+header#header-main section#header-section div#menu button#btn-menu:hover{
+    border: 1px solid var(--primary-color-5);    
+    background: var(--primary-color-5);
+}
+
+
+nav.nav-menu a{
+    color: var(--primary-color-text);    
+    font-size: 18px;    
+    font-weight: bold;
+}
+
+nav.nav-menu a:hover{
+    color: var(--primary-color-2);    
+}
+
+
+header#header-main-home  nav.nav-menu  a{
+    color: var(--primary-color);        
+}
+
+header#header-main-home  nav.nav-menu  a:hover{
+    color: var(--primary-color-2);    
+}
+
+
+nav.nav-menu ul{
+    display: flex;
+    flex-direction: row;    
+}
+
+nav.nav-menu ul li{
+    margin-left: 26px;
+    
+}
+
+section#header-section div#menu-end{
+    display: flex;
+    flex-direction: row;
+}
+
+section#header-section div.menu-end-class span{
+    font-weight: bold;
+    color: var(--primary-color-text);    
+}
+
+
+header#header-main-home  section#header-section div.menu-end-class span{    
+    color: var(--primary-color);        
+}
+
+section#header-section div#menu-end a{
+    padding: 5px 10px;     
+    border-radius: 5px;        
+}
+
+
+section#header-section div#menu-end a img{
+    vertical-align: middle;
+    height: 20px;
+    margin-left: 5px;
+}
+
+section#header-section div.menu-end-class #new-task{
+    margin-left: 5px;
+    background-color: var(--accent-color);
+    color: var(--accent-color-text);
+    border: 1px solid var(--accent-color-border);
+}
+
+section#header-section div.menu-end-class #new-task:hover{
+    background-color: var(--accent-color-hover);
+}
+
+section#header-section div.menu-end-class #logoff{
+    margin-left: 5px;
+    border: 1px solid var(--primary-color-border);
+    background-color: var(--primary-color);    
+    color: #FFF;
+}
+
+
+section#header-section div.menu-end-class #logoff:hover{
+    background-color: var(--primary-color-hover);
+}
+
+section#header-section div.menu-end-class #login{
+    margin-left: 5px;
+    background-color: #FFF;
+    color: var(--secundary-color);
+}
+
+
+section#header-section div.menu-end-class #login:hover{
+    background-color: var(--input-border-color);
+    color: var(--secundary-color-hover);
+}
+
+
+section#header-section div.menu-end-class a#login svg{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+section#header-section div.menu-end-class a#logoff svg{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+div#menu-hidden{
+    position: fixed;
+    left: 0;
+    top: var(--header-height-small);
+    z-index: 99999;
+    background: var(--primary-color-text);    
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+div#menu-hidden{
+    position: fixed;
+    left: -100%;
+    top: var(--header-height-small);
+    z-index: 99999;
+    background: var(--primary-color-text);    
+    padding: 0.5rem 0;
+    width: 100%;
+    -webkit-transition: left 0.5s ease-in-out;
+    -moz-transition: left 0.5s ease-in-out;
+    transition: left 0.3s ease-out;
+}
+
+
+div#menu-hidden.show{
+    left: 0;
+
+}
+
+
+div#menu-hidden nav.nav-menu ul{
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+}
+
+div#menu-hidden nav.nav-menu ul li{
+    margin: 0.5rem 0;        
+}
+
+div#menu-hidden nav.nav-menu ul li a{
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+
+div#menu-hidden nav.nav-menu ul li a:hover{
+    color: var(--primary-color-2);
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+
+    header#header-main-home{
+        height: var(--header-height-small);
+    }
+
+    header#header-main{
+        height: var(--header-height-small);
+    }
+
+    section#header-section nav.nav-menu{
+        display: none;
+    }
+
+    section#header-section div#menu .logo{
+        height: 36px;
+    }
+
+    section#header-section div#menu-end-small{
+        display: flex;
+    }
+
+    section#header-section div#menu-end{
+        display: none;
+    }    
+
+    section#header-section div#menu-end-small a{        
+        padding: 2px 7px 7px 6px;
+        border-radius: 5px;        
+    }
+
+    section#header-section div#menu-end-small a img{
+        vertical-align: middle;
+        height: 20px;                        
+    }    
+
+
+}
+
+
+
+
+@media only screen and (min-width: 600px) {
+
+
+
+    section#header-section div#menu button#btn-menu{
+        display: none;
+    }
+
+
+    /* */
+    
+    section#header-section div#menu-end-small{
+        display: flex;
+
+    }
+
+    section#header-section div#menu-end{
+        display: none;
+    }    
+     
+    section#header-section div#menu-end-small a{        
+        padding: 2px 7px 7px 6px;
+        border-radius: 5px;        
+    }
+
+    section#header-section div#menu-end-small a img{
+        vertical-align: middle;
+        height: 20px;                        
+    }    
+
+
+}
+
+
+
+@media only screen and (min-width: 750px) {
+
+    
+    section#header-section div#menu-end-small{
+        display: none;
+    }
+
+    section#header-section div#menu-end{
+        display: flex;
+    }    
+
+}

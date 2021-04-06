@@ -1,0 +1,14 @@
+div.alert-box{
+    display: flex;
+    justify-content: center;
+    color: red;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid red;
+}
+
+/* 
+        <div className="alert-box">
+            <strong className="alert-message">{msg.msg}</strong>
+        </div>
+*/

@@ -1,0 +1,12 @@
+div#notfound{
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+    margin-top: var(--header-height);    
+}
+
+div#notfound #message{
+    color:var(--primary-color);
+    background: var(--primary-back-color);
+    font-size: 2rem;
+}

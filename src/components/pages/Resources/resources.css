@@ -1,0 +1,14 @@
+
+
+section#header-resources{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+label#show-unavailables{
+    margin-left: 1rem;
+}
+
+

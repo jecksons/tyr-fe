@@ -1,0 +1,44 @@
+
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #d1d1d1;
+    opacity: 1; /* Firefox */
+  }
+  
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #d1d1d1;
+}
+  
+input::-ms-input-placeholder { /* Microsoft Edge */
+    color: #d1d1d1;
+}
+
+
+
+header{
+    justify-content: center;
+    width: 100%;
+}
+
+div#app-main-content{
+    min-height: calc(100vh - 70px);
+}
+
+div#main-content-client{    
+    padding-bottom: 60px;
+}
+
+
+footer#footer-main {        
+    margin-top: -60px;
+    background: var(--primary-color-5);
+    height: 60px;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.MuiTypography-root {
+    color: var(--form-title);
+    margin: 0;
+}

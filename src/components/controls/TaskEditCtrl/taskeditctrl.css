@@ -1,0 +1,102 @@
+
+section#info-task{
+    background: #fff;
+    border-radius: 4px;
+    padding: 30px;
+}
+
+section#info-task hr{
+    border: 1px solid #f5f5f5;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+#header-task{
+    display: flex;
+    flex-direction: row;   
+    justify-content: space-between; 
+    min-width: 30rem;
+}
+
+#header-task button{
+    background: transparent;
+    border: 0;
+    outline: 0;    
+    cursor: pointer;
+}
+
+#header-task  svg{
+    color: var(--secundary-color);
+}
+
+#header-task  svg:hover{
+    color: var(--form-title);
+}
+
+#header-task #title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 1rem;
+    color: var(--form-title);
+}
+
+#header-task #success-div{
+    background: rgb(109, 156, 109);
+    color: #fff;
+    opacity: 1;
+    border-radius: 4px;
+    border: 1px solid green;
+    animation: showdiv 2s normal;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+@keyframes showdiv{
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+#start-header-task{
+    display: flex;
+    flex-direction: row;        
+}
+
+div#alert-div{
+    display: flex;
+    justify-content: center;
+}
+
+strong#alert-message{
+    color: red;
+    font-weight: bold;    
+    width: max-content;
+}
+
+form.task{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 30rem;
+}
+
+form.task input.text-default{    
+    margin-bottom: 1rem;    
+}
+
+
+div #bottom-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+    flex-direction: row;
+    justify-content: flex-end;        
+}
+
+div #bottom-buttons button{
+    margin-left: 3px;
+    font-size: 0.8rem;
+}
+
+form.task #details{
+    height: 4rem;
+}

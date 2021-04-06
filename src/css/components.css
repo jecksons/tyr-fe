@@ -1,0 +1,218 @@
+
+div.parent-page-center{
+    display: flex;
+    justify-content: center;    
+    margin-top: var(--header-height);
+    background: var(--primary-back-color);
+}
+@media only screen and (max-width: 600px) {
+    div.parent-page-center{
+        margin-top: var(--header-height-small);
+    }    
+}
+
+div.client-center{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: var(--max-width);  
+    padding: 1rem 0;
+}
+
+div.parent-container-controls{
+    background: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0px 0px 4px 2px #F3F3F3;
+}
+
+
+button.button-default{
+    background: var(--primary-color-text);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color-border);
+    min-width: 60px;
+    height: 30px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.button-default:focus{
+    background: var(--primary-color-text-focus);
+}
+
+
+button.button-default:hover{
+    background: var(--primary-color-hover);    
+    color: var(--primary-color-text);    
+}
+
+button.button-default:disabled{
+    cursor: not-allowed;
+    background: #d3d3d3;
+    color: #b4b3b3;
+    border-color: #f0f0f0;
+}
+
+button.button-default-action{
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    border: 1px solid var(--primary-color-border);
+    min-width: 60px;
+    height: 30px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.button-default-action:focus{
+    background: var(--primary-color-focus);    
+    color: var(--primary-color-text-focus);    
+}
+
+button.button-default-action:hover{
+    background: var(--primary-color-hover);    
+    color: var(--primary-color-text);    
+}
+
+button.button-default-action:disabled{
+    cursor: not-allowed;
+    background: #d3d3d3;
+    color: #b4b3b3;
+    border-color: #f0f0f0;
+}
+
+
+input.text-default{
+    padding-left: 10px;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-width: 1px;
+    border-color: var(--input-border-color);
+    outline: 0;
+    margin: 5px 0px;    
+}
+
+input.text-default-error{
+    padding-left: 10px;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;    
+    border-width: 1px;
+    background: rgb(252, 189, 189);
+    border-radius: 4px;
+    border-color: red;
+    outline: 0;    
+    margin: 5px 0px;        
+}
+
+
+input.text-default:focus{
+    border-color: var(--primary-color-hover);    
+}
+
+label.label-default{
+    color: var(--form-label);
+    font-size: 0.9rem;
+}
+
+textarea.textarea-default{
+    border-width: 1px;
+    border-color: var(--input-border-color);
+    outline: 0;
+    margin: 5px 0px;    
+    resize: none;
+}
+
+textarea.textarea-default:focus{
+    border-color: var(--secundary-color-hover);    
+}
+
+
+label.check-default{
+    border: 1px solid var(--primary-color);
+    padding: 0.3rem;
+    color: var(--primary-color);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+section.form-header{
+    display: flex;
+    align-items: center;
+}
+
+section.form-header button{
+    background: transparent;
+    border: 0;
+    outline: 0;    
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+section.form-header svg{
+    color: var(--form-title);
+}
+
+section.form-header svg:hover{
+    color: var(--form-title-hover);
+}
+
+section.form-header strong{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--form-title);
+}
+
+div.input-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+div.invalid-input{
+    color: red;
+    font-weight: bold;
+    max-width: 10rem;        
+    word-wrap: break-word;
+}
+
+div.alert-message{
+    color: red;
+    text-align: center;
+}
+
+span.text-ro-default{
+    padding-left: 1rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    color: #525252;
+    border-color: var(--input-border-color);    
+    margin: 5px 0px;        
+}
+
+
+div.select-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+button.select-add-new{
+    background-color: #fff;
+    outline: 0;
+    border: none;
+    color: var(--primary-color-2);
+    cursor: pointer;
+    padding: 0;    
+    height: min-content;   
+}
+
+button.select-add-new:hover{
+    color: var(--primary-color-4);
+}
+

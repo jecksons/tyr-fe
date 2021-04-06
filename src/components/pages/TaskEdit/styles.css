@@ -1,0 +1,277 @@
+div#back-align-horiz{
+    display: flex;
+    flex-direction: row;
+}
+
+section#title-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+ 
+form#edit-task {
+    min-width: 32rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+form#edit-task strong{
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: larger;
+}
+
+form#edit-task section{
+    display: flex;
+    flex-direction: column;
+}
+
+form#edit-task label{
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+}
+
+form#edit-task input{
+    margin-left: 0.5rem;
+    width: auto;
+}
+
+form#edit-task div.invalid-input{
+    margin-left: 0.5rem;   
+}
+
+
+form#edit-task div.input-form-dates{
+    display: flex;
+    flex-direction: column;
+}
+
+form#edit-task div#horiz-align{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+form#edit-task div#task-status{
+    box-shadow: 0 3px 3px 1px #c7c7c7;
+}
+
+form#edit-task div#task-status span{
+    font-weight: bold;
+}
+
+div#resources-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+button.btn-form-full{        
+    background: none;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+button.btn-form-full svg{        
+    color: #272727;
+}
+
+
+button.btn-form-full svg:hover{        
+    color:  #8a8a8a;
+}
+
+
+div#resources-header button#add-new-resource{
+    margin-top: 1rem;
+}
+
+
+
+div#resources-header button#btn-add-resource{
+    height: 2rem;
+    margin-top: 0.7rem;
+}
+
+
+div#resource-list{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+div#resource-list li{
+    float: left;
+    margin: 0.2rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    background: #c7c7c7;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+div#resource-list li button{
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+    background: none;
+    outline: 0;
+    border: 0;
+    margin-left: 0.5rem;
+}
+
+div#resource-list li svg{
+    vertical-align: middle;
+    size: 1rem;
+    color: #272727;
+    margin-left: -0.29rem;
+    margin-top: -0.2rem;    
+    padding: 0;    
+}
+
+div#resource-list li svg:hover{
+    color: #8a8a8a;
+}
+
+div.pos-date-input{
+    max-width: 10rem;
+}
+
+div.pos-date-input .MuiFormControl-root{
+    max-width: 10rem;
+    margin-top: 5px;
+}
+
+
+
+form#task-actions{
+    display: flex;
+    flex-direction: column;    
+    min-width: 15rem;        
+}
+
+div#parent-task-actions{
+    margin-bottom: 1rem;
+}
+
+form#task-actions button{
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+form#task-actions strong{
+    font-weight: bold;
+    font-size: larger;
+    margin-bottom: 1rem;
+}
+
+div#timeline{
+    min-width: 15rem;    
+}
+
+div#timeline strong{
+    font-weight: bold;
+    font-size: larger;
+    margin-bottom: 1rem;
+}
+
+div#timeline li{
+    box-shadow: 1px 1px 3px var(--primary-color);
+    margin-top: 1rem;
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: default;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+div#timeline li:hover{
+    background: var(--primary-color);        
+}
+
+div#timeline li span{    
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+
+div#normal-timeline-item{
+    display: block;
+
+}
+
+div#normal-timeline-item-hover{
+    display: none;     
+}
+
+div#timeline li:hover  div#normal-timeline-item-hover {
+    display: block;
+}
+
+div#timeline li:hover  div#normal-timeline-item {
+    display: none;
+}
+
+
+@media only screen and (max-width: 600px) {
+    div#back-align-horiz{
+        flex-direction: column;
+    }
+
+    form#edit-task {
+        min-width: 0; 
+    }
+
+    form#edit-task div#horiz-align{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div#task-side-options{
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+   
+}
+
+
+@media only screen and (min-width: 600px) {
+       
+    div#back-align-horiz{
+        flex-direction: column;
+    }
+
+    div#task-side-options{        
+        margin-left: 0;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;        
+    }
+  
+}
+
+@media only screen and (min-width: 871px) {
+       
+    div#back-align-horiz{
+        flex-direction: row;
+    }
+
+    div#task-side-options{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 1rem;
+        margin-top: 0;
+    }
+    
+
+  
+}

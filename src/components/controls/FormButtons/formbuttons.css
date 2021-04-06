@@ -1,0 +1,41 @@
+
+div#bottom-buttons{
+    display: flex;
+    flex-direction: row;    
+    margin-top: 1rem;    
+}
+
+div#bottom-buttons.full-buttons{    
+    justify-content: flex-end;            
+}
+
+div#bottom-buttons div#right-buttons{
+    width: fit-content;
+}
+
+
+div#right-buttons button{
+    margin-left: 0.3rem;
+}
+
+
+@media only screen and (max-width: 600px) {    
+    div#box-resource{
+        min-width: 0;
+    }
+    
+    div#bottom-buttons.full-buttons{
+        display: flex;
+        flex-direction: column;    
+        justify-content: center;
+    }
+
+    div#bottom-buttons.full-buttons button{
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+
+
+
+}

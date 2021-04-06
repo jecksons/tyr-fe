@@ -1,0 +1,51 @@
+section#resource-header{
+    display: flex;
+    align-items: center;
+
+}
+
+#resource-header button{
+    background: transparent;
+    border: 0;
+    outline: 0;    
+    cursor: pointer;
+}
+
+#resource-header  svg{
+    color: var(--form-title);
+}
+
+#resource-header  svg:hover{
+    color: var(--form-title-hover);
+}
+
+#resource-header strong{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 1rem;
+    color: var(--form-title);
+}
+
+
+div#box-resource{
+    background: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    min-width: 40rem;
+}
+
+form#resource {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+form#resource label#available{
+    margin-top: 1rem;
+}
+
+@media only screen and (max-width: 600px) {    
+    div#box-resource{
+        min-width: 0;
+    }
+}

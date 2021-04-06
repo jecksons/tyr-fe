@@ -1,0 +1,20 @@
+
+
+section#filters{
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem;
+}
+
+section#tasks-list div#loading{
+    color: var(--primary-color);
+    height: 60vh;
+    min-width: 60vh;
+    display: flex;
+    font-size: 2rem;
+    flex-direction: row;    
+    align-items: center;
+    justify-content: center;
+}
