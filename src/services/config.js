@@ -3,14 +3,12 @@ export default function Config(){
    
     const cfgBase = {
         development: {
-            apiURL: 'https://tyr-be.herokuapp.com'            
+            apiURL: 'http://192.168.0.11:3000'            
         },
         production: {
             apiURL: 'https://tyr-be.herokuapp.com'
         }
     };
 
-    //apiURL: 'http://localhost:3000'
-    
     return cfgBase[env];
 }

@@ -5,10 +5,114 @@ section#header-resources{
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 1rem;
 }
 
-label#show-unavailables{
+div#header-resources-options{
+    display: flex;
+    flex-direction: column;
     margin-left: 1rem;
 }
 
+div#sort-resources{
+    display: none;
+    align-items: baseline;
+}
 
+div#sort-resources select{
+    margin-left: 0.3rem;
+}
+
+div .res-card-item,
+div .res-card-item-unavailable{
+    border: 1px solid #e5e5e5;
+    margin: 0 5px 5px;
+    padding: 0.5rem;
+    background: #fff;
+    min-width: 15rem;
+    cursor: default;
+}
+
+div .res-card-item:hover{
+    background-image: linear-gradient(#fcfcfc, #efefef);
+}
+
+div .res-card-item-unavailable{
+    background: #efefef;
+}
+
+div .res-card-item-unavailable:hover{
+    background-image: linear-gradient(#f3f3f3, #d8d8d8) ;
+}
+
+div .res-detail-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;    
+    border-bottom: 1px solid #e5e5e5;
+    margin-top: 0.08rem;
+    padding-bottom: 0.335rem;
+    margin-bottom: 0.3125rem;
+}
+
+div .res-detail-header h2#unavailable{
+    color: crimson;
+    font-size: small;
+}
+
+div .res-card-item-unavailable h3{
+    text-decoration: line-through;
+}
+
+div .res-card-item h2,
+div .res-card-item-unavailable h2{
+    font-weight: bold;
+}
+
+
+div .res-detail-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #535353;
+    font-size: small;
+    line-height: 1rem;
+    flex-wrap: wrap;    
+}
+
+div .res-detail-group h3{
+    min-width: 5rem;
+    text-align: center;
+}
+
+
+
+
+
+/*
+<div className={`res-card-item${itm.available === false && '-unavailable'}`}>
+<h2>{itm.name}</h2>
+<div className="res-detail-group">
+    <h3>{`${itm.opened_duration} scheduled hrs` }</h3>
+    <h3>{itm.available === true ? 'Available' : 'Unavailable'}</h3>
+</div>
+<div className="res-detail-group">
+*/
+
+@media only screen and (max-width: 720px) {
+
+    section#resources-list{
+        display: none;
+    }
+
+    div#sort-resources{
+        display: inherit;        
+    }
+
+    section#header-resources{
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+
+}

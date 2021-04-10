@@ -119,6 +119,17 @@ label.label-default{
     font-size: 0.9rem;
 }
 
+
+select.text-default{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-width: 1px;
+    border-color: var(--input-border-color);
+    outline: 0;
+    margin: 5px 0px;    
+}
+
 textarea.textarea-default{
     border-width: 1px;
     border-color: var(--input-border-color);
@@ -133,10 +144,8 @@ textarea.textarea-default:focus{
 
 
 label.check-default{
-    border: 1px solid var(--primary-color);
     padding: 0.3rem;
-    color: var(--primary-color);
-    border-radius: 4px;
+    color: var(--primary-color);   
     cursor: pointer;
 }
 
