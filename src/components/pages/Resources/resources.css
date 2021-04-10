@@ -1,3 +1,7 @@
+div#center-resources strong#loading{
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
 
 
 section#header-resources{
@@ -21,6 +25,10 @@ div#sort-resources{
 
 div#sort-resources select{
     margin-left: 0.3rem;
+}
+
+section#resources-cards{
+    display: none;
 }
 
 div .res-card-item,
@@ -85,20 +93,6 @@ div .res-detail-group h3{
     text-align: center;
 }
 
-
-
-
-
-/*
-<div className={`res-card-item${itm.available === false && '-unavailable'}`}>
-<h2>{itm.name}</h2>
-<div className="res-detail-group">
-    <h3>{`${itm.opened_duration} scheduled hrs` }</h3>
-    <h3>{itm.available === true ? 'Available' : 'Unavailable'}</h3>
-</div>
-<div className="res-detail-group">
-*/
-
 @media only screen and (max-width: 720px) {
 
     section#resources-list{
@@ -107,6 +101,10 @@ div .res-detail-group h3{
 
     div#sort-resources{
         display: inherit;        
+    }
+
+    section#resources-cards{
+        display: inherit;
     }
 
     section#header-resources{
