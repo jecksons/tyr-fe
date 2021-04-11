@@ -1,22 +1,61 @@
 import './tasks.css';
-import React, {useEffect, useState} from 'react';
-import TaskTable from '../../controls/TaskTable';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import api from '../../../services/api';
+import moment from 'moment';
+import {BsArrowLeftShort, BsArrowRightShort} from 'react-icons/bs';
+
+
+const taskPageSize =  5;
+const emptySelectOption = {value: '', label: 'Select...'};
 
 export default function Tasks(){
 
-    const [taskData, setTaskData] = useState({
-        loaded: false,
-        items: []
-    });
-    
-
+    const [taskItems, setTaskItems] = useState([]);
+    const [taskListInfo, setTaskListInfo] = useState({});
+    const [itemsLoaded, setItemsLoaded] = useState(false);    
+    const [sortOption, setSortOption] = useState('');
+    const [statusOption, setStatusOption] = useState('');
+    const history = useHistory();
+    const [rowOffset, setRowOffset] = useState(0);
+    const [taskStatusItems, setTaskStatusItems] = useState([]);
+    const [taskSortOptions, setTaskSortOptions] = useState([]);
 
     useEffect(() => {
-        api.get('/tasklist')
+        Promise.all(
+            [
+                api.get('/tasklist/sortoptions'),
+                api.get('/task_status'),
+            ]
+        ).then((results) => {
+            let retSort = results[0].data;
+            retSort.unshift(emptySelectOption);
+            setTaskSortOptions(retSort);
+            let retStatus = results[1].data.map((itm) => {
+                return {value: itm.id, label: itm.name}
+            });
+            retStatus.unshift(emptySelectOption);
+            setTaskStatusItems(retStatus);
+        });
+    }, []);
+
+    
+
+    useEffect(() => {        
+        let getOptions = `?offset=${rowOffset}&limit=${taskPageSize}`;
+        if (statusOption !== ''){
+            getOptions += `&status=${statusOption}`;            
+        }        
+        if (sortOption !== ''){
+            getOptions += `&sort_by=${sortOption}`;
+        }
+        
+        api.get(`/tasklist/${getOptions}`)
         .then((ret) => {
             let tableData = [];            
-            ret.data.forEach((item) => {
+            console.log(ret.data.metadata);
+
+            ret.data.results.forEach((item) => {
                 const data = item;                                                
                 tableData.push( 
                     {
@@ -28,11 +67,93 @@ export default function Tasks(){
                         when: (new Date(data.deadline))
                     }
                 );
-            });
-            setTaskData({loaded: true, items: tableData});    
+            });            
+            setTaskListInfo(ret.data.metadata);
+            setTaskItems(tableData);
+            setItemsLoaded(true);
         }
         );
-    }, [] );
+    }, [sortOption, rowOffset, statusOption] );
+
+
+    const handlePagePosition = useCallback((e, next) => {
+        e.preventDefault();
+        if (next === false){
+            if (taskListInfo.offset > 0) {
+                let newOffset = taskListInfo.offset - taskPageSize;
+                if (newOffset < 0) {
+                    newOffset = 0;
+                }
+                console.log('setou prior');
+                setRowOffset(newOffset);
+            }
+        } else {
+            if ((taskListInfo.offset + taskPageSize) < taskListInfo.total) {
+                console.log('setou next');
+                setRowOffset(taskListInfo.offset + taskPageSize);
+            }
+        }
+
+
+    }, [taskListInfo])
+
+    function renderTasks(){
+        return (
+            <div>
+                <section id="header-tasklist">                                            
+                    <strong id="info-tasks">Tasks</strong>
+                    <div id="header-tasklist-group">
+                        <div className="task-list-header-input">
+                            <label className="label-default">Status</label>
+                            <select className="text-default"  onChange={(e) => setStatusOption(e.target.value)}>
+                                {
+                                    taskStatusItems.map((opt) => <option value={opt.value} key={opt.value}>{opt.label}</option> )
+                                }
+                            </select>
+                        </div>                                        
+                        <div className="task-list-header-input">
+                            <label className="label-default">Sort by</label>
+                            <select className="text-default" value={sortOption} onChange={(e) => setSortOption(e.target.value)} >
+                                {
+                                    taskSortOptions.map((opt) => <option value={opt.value} key={opt.value}>{opt.label}</option> )
+                                }
+                            </select>
+                        </div>                    
+                        <div className="pagination-default">
+                            <h2>{`${taskListInfo.offset + 1}-${
+                                                (taskListInfo.offset + taskListInfo.limit) > taskListInfo.total ? taskListInfo.total : 
+                                                (taskListInfo.offset + taskListInfo.limit)
+                                                } of ${taskListInfo.total}`}</h2>
+                            <button id="prior-page" onClick={(e) => handlePagePosition(e, false)}>
+                                <BsArrowLeftShort size={20}></BsArrowLeftShort>
+                            </button>
+                            <button id="next-page" onClick={(e) => handlePagePosition(e, true)}>
+                                <BsArrowRightShort size={20}></BsArrowRightShort>
+                            </button>
+                        </div>
+                    </div>                                      
+                </section>
+                <ul >
+                    {taskItems.map((itm) => 
+                        <li key={itm.id} className="task-list-item" 
+                            onClick={() => {
+                                history.push('/tasks/' + itm.id);
+                            }}>
+                            <div id="task-list-item-header">                                
+                                <h2>{itm.title}</h2>
+                                <h2  id="task-id">{itm.id}</h2>
+                            </div>
+                            <div id="task-list-item-detail">
+                                <h3>{`Location: ${itm.location}`}</h3>
+                                <h3>{itm.status}</h3>
+                                <h3>{moment(itm.when).format('llll')}</h3>                                                                        
+                                <h3>{itm.who}</h3>
+                            </div>                                                                
+                        </li> )}
+                </ul>
+            </div>
+        )
+    }
 
 
     return (
@@ -40,7 +161,23 @@ export default function Tasks(){
             <div id="tasks-box" className="client-center">           
                 <div id="tasks-panel" className="parent-container-controls">                            
                     <section id="tasks-list">
-                        {taskData.loaded ?  
+                        {itemsLoaded ?  
+                            renderTasks()
+                             : 
+                            (
+                                <div id="loading">
+                                    <strong>Loading data</strong>
+                                </div>                                
+                            )                        
+                        }                            
+                    </section>                                                
+                </div>                                
+            </div>
+        </div>
+    );
+
+    /* 
+{taskData.loaded ?  
                             <TaskTable tableData={taskData.items} ></TaskTable> 
                              : 
                             (
@@ -49,9 +186,5 @@ export default function Tasks(){
                                 </div>                                
                             )                        
                         }                                
-                    </section>                                                
-                </div>                                
-            </div>
-        </div>
-    )
+    */
 }

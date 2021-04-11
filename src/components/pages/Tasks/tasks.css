@@ -1,4 +1,40 @@
+section#header-tasklist{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+}
 
+strong#info-tasks{
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+div#header-tasklist-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+}
+
+div.task-list-header-input{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    white-space: nowrap;
+    margin: 5px;
+}
+
+div.task-list-header-input label{
+    margin-right: 5px;
+}
+
+div.task-list-header-input select{
+    min-width: 8rem;
+}
 
 section#filters{
     background: #fff;
@@ -17,4 +53,66 @@ section#tasks-list div#loading{
     flex-direction: row;    
     align-items: center;
     justify-content: center;
+}
+
+div.pos-date-input-tsk{
+    max-width: 9rem;    
+}
+
+div.pos-date-input-tsk .MuiFormControl-root{
+    max-width: 9rem; 
+    margin-top: 0px;
+}
+
+
+li.task-list-item{
+    border: 1px solid #e5e5e5;
+    margin-top: 0.3125rem;
+    padding: 0.375rem;
+    cursor: default;     
+}
+
+li.task-list-item:hover{
+    background-image: linear-gradient(#fcfcfc, #efefef);
+}
+
+div#task-list-item-header{
+    display: flex;
+    flex-direction: row;
+    justify-items: start;
+    justify-content: space-between;
+    padding-bottom: 0.375rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+div#task-list-item-header h2#task-id{
+    margin-left: 1rem;
+    font-weight: bold;
+}
+
+div#task-list-item-detail{
+    color: var(--form-label);
+    font-size: small;
+    display: grid;
+    grid-template-columns: 25% 25% auto auto;    
+}
+
+div#task-list-item-detail h3{
+    padding-top: 0.375rem;        
+    margin-inline-end: 1.5rem;
+}
+
+@media only screen and (max-width: 600px){
+
+    div#task-list-item-detail{
+        color: var(--form-label);
+        font-size: small;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        
+        justify-content: space-between;
+    }
+
+
 }

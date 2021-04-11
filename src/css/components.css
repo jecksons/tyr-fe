@@ -195,6 +195,41 @@ div.alert-message{
     text-align: center;
 }
 
+div.pagination-default{
+    display: flex;
+    flex-direction: row;        
+    align-items: center;
+    color: var(--form-label);
+    padding: 0.3125rem;
+    cursor: default;
+}
+
+div.pagination-default h2{
+    margin-right: 0.5rem;    
+    white-space: nowrap;
+    min-width: 7rem;
+    text-align: right;
+}
+
+div.pagination-default button{
+    outline: 0;
+    border: 0;
+    border-radius: 50%;
+    padding: 4px;
+    background-color: transparent;    
+    cursor: pointer;
+}
+
+div.pagination-default button:hover{
+    background-color: #d4d4d4;
+}
+
+div.pagination-default svg{
+    display: grid;
+    align-content: center;
+    color: var(--form-label);
+}
+
 span.text-ro-default{
     padding-left: 1rem;
     padding-bottom: 0.5rem;
