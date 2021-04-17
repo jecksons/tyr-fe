@@ -3,6 +3,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/firestore';
+import api from './api';
 
 
 let firebaseConfig = {
@@ -45,15 +46,21 @@ class Firebase {
     async register(name, email, password){
         await app.auth().createUserWithEmailAndPassword(email, password);
         const user = app.auth().currentUser;
-        await user.updateProfile({
-            displayName: name
-            }
-        );
         const uid = app.auth().currentUser.uid;
+        const updUser = {
+            name: name,
+            uid: uid,
+            email: email
+        };
+        await api.post('/users', updUser);        
+        await user.updateProfile({
+                displayName: name
+                }
+            );            
         return app.database().ref('user').child(uid).set({
             name: name,
             email: email
-        });
+        });    
     }
 
     login(email, password) {
@@ -66,7 +73,6 @@ class Firebase {
 
     dateToTimeStamp(date){
         return app.firestore.Timestamp.fromDate(date);
-
     }
 
     async getUserName(callback) {

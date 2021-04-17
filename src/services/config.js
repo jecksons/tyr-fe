@@ -10,7 +10,7 @@ export default function Config(){
 
     const cfgBase = {        
         development: {
-            apiURL: 'http://192.168.0.11:3000',
+            apiURL: 'http://localhost:3000',
             original_env: env
         },
         production: {

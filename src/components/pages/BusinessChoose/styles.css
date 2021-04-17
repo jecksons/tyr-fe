@@ -1,0 +1,115 @@
+section.connect-business{
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;        
+    
+}
+
+section.connect-business h2, h3{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
+section.connect-business h2{
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+section.connect-business h3{
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+div#divum{
+    box-shadow: 0 0 2px 1px #d6d6d6;
+}
+
+form.create-business{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    min-width: 14rem;    
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 1px #d6d6d6;
+}
+
+
+form.create-business label{
+    margin-bottom: 0.3125rem;
+}
+
+
+form.create-business div.react-select-container{
+    margin-bottom: 0.5rem;
+}
+
+div .bottom-form-create-business{
+    display: flex;
+    flex-direction: column;    
+    
+}
+
+
+section.select-business{
+    display: flex;
+    flex-direction: column;
+    text-align: center;    
+}
+
+section.select-business h1{
+    font-weight: bold;
+    font-size: 1.5rem;    
+}
+
+section.select-business h2{
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+section.select-business a{
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+
+section.select-business form{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;    
+}
+
+
+button#set-create-business{
+    padding: 0;
+    border: 0;    
+}
+
+button#set-create-business:hover{
+    background: var(--primary-color-text);
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+#set-create-business span{
+    font-weight: bold;
+}
+
+
+@media only screen and (min-width: 600px){
+    form.create-business{
+        min-width: 20rem;
+    }
+
+    div .bottom-form-create-business{
+        display: flex;
+        flex-direction: row;    
+        justify-content: flex-end;
+    }
+
+
+
+}

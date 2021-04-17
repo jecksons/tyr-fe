@@ -11,11 +11,11 @@ export default function ResourceEdit(props){
                 {
                     (props.match.params.id &&  (props.match.params.id !== '')) ? 
                     (
-                        <ResourceEditCtrl resourceID={props.match.params.id}>
+                        <ResourceEditCtrl resourceID={props.match.params.id} userData={props.userData}>
                         </ResourceEditCtrl>
                     ) : 
                     (
-                        <ResourceEditCtrl >
+                        <ResourceEditCtrl userData={props.userData}>
                         </ResourceEditCtrl>                        
                     )
                 }                                

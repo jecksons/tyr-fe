@@ -14,6 +14,9 @@ import Register from './components/pages/Register';
 import TaskEdit from'./components/pages/TaskEdit';
 import Resources from './components/pages/Resources';
 import ResourceEdit from './components/pages/ResourceEdit';
+import ProtectedRoute from './ProtectedRoute';
+import BusinessChoose from './components/pages/BusinessChoose';
+import api from './services/api';
 
 
 class App extends Component {
@@ -22,37 +25,71 @@ class App extends Component {
     super(props);
     //this.onAuthChanged = thids;
     this.onChangeUserLogin = this.onChangeUserLogin.bind(this);
+    this.onSelectBusiness = this.onSelectBusiness.bind(this);
   }
 
   state = {
     firebaseState: 0,
     userData: {
+      userID: 0,
       name: '',
       email: '',
       uid: '',
-      isLogged: false
+      isLogged: false,
+      businessID: 0,
+      businessName: ''
     }    
-  };
+  };  
 
-  onChangeUserLogin(user){
+  onChangeUserLogin(user, onSucessGetUser){
     let userData = {
+      userID: 0,
       name: '',
       email: '',
       uid: '',
-      isLogged: false
+      isLogged: false,
+      businessID: 0,
+      businessName: ''
     }
     let firebaseState = this.state.firebaseState;
-
     if (user) {
       if (user.uid !== ''){
         userData.email = user.email;
-        userData.name = user.displayName;
+        if (user.name) {
+          userData.name = user.name
+        } else {
+          userData.name = user.displayName;
+        }        
         userData.uid = user.uid;
-        userData.isLogged = true;          
       }
     }                
-    firebaseState++;
-    this.setState({firebaseState, userData});  
+    firebaseState++;    
+    if (userData.uid !== ''){
+      api.get(`/users/uid/${userData.uid}`)
+      .then((ret) => {
+        userData.isLogged = true;
+        userData.userID = ret.data.id;
+        if (ret.data.business) {
+          userData.businessID = ret.data.business.id;
+          userData.businessName = ret.data.business.name;
+        }        
+        this.setState({firebaseState, userData});          
+        if (onSucessGetUser) {
+          onSucessGetUser();
+        }
+      })
+      .catch((err) => {
+        console.log('erro');
+        console.log(err);
+      });
+    } else {
+      this.setState({firebaseState, userData});  
+    }
+  }
+
+  onSelectBusiness(onSucessGetUser){    
+    let oldUser = {...this.state.userData};    
+    this.onChangeUserLogin(oldUser, onSucessGetUser);    
   }
   
   
@@ -66,9 +103,9 @@ class App extends Component {
     this.onAuthChanged = undefined;
   }
 
-  render() {
-    console.log(document.location.pathname);
+  
 
+  render() {
     if (this.state.firebaseState !== 0 ) {
       return (
         <div>
@@ -79,13 +116,14 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/"  component={Home}  />              
                   <Route exact path="/login"  component={Login} />
-                  <Route exact path="/register"  component={Register} />
-                  <Route exact path="/tasks"  component={Tasks} />
-                  <Route exact path="/tasks/:id"  component={ (this.state.userData && this.state.userData.isLogged) ? TaskEdit : Login} />
-                  <Route exact path="/newtask"   component={ (this.state.userData && this.state.userData.isLogged) ? TaskEdit : Login} />
-                  <Route exact path="/resources"  component={Resources} />
-                  <Route exact path="/resources/:id"  component={ (this.state.userData && this.state.userData.isLogged) ? ResourceEdit : Login} />
-                  <Route exact path="/newresource"  component={ (this.state.userData && this.state.userData.isLogged) ? ResourceEdit : Login} />
+                  <Route exact path="/register"  component={Register} />                  
+                  <BusinessChoose exact path="/businesschoose"  userData={this.state.userData} onSelectBusiness={this.onSelectBusiness} />
+                  <ProtectedRoute exact path="/tasks"  component={Tasks} userData={this.state.userData} />
+                  <ProtectedRoute exact path="/tasks/:id"  component={ TaskEdit} userData={this.state.userData} />
+                  <ProtectedRoute exact path="/newtask"   component={ TaskEdit} userData={this.state.userData} />
+                  <ProtectedRoute exact path="/resources"  component={Resources} userData={this.state.userData} />
+                  <ProtectedRoute exact path="/resources/:id"  component={  ResourceEdit} userData={this.state.userData} />
+                  <ProtectedRoute exact path="/newresource"  component={ ResourceEdit} userData={this.state.userData} />                  
                   <Route path="*"  component={NotFound} />
                 </Switch>                    
               </BrowserRouter>                    

@@ -76,13 +76,17 @@ export default function ResourceEditCtrl(props){
                 setPostingData(true);
                 let postResource = {
                     name: editValues.name,
-                    available: editValues.available
+                    available: editValues.available,
+                    id_business: props.userData.businessID
                 };
                 if (editValues.id > 0 ) {
                     postResource.id = editValues.id;
                 }
                 api.post('/resources',
-                    postResource
+                    postResource,
+                    {
+                        validateStatus: (status) => status < 600
+                    }
                 )
                 .then((ret) => {
                     setPostingData(false);
@@ -95,11 +99,14 @@ export default function ResourceEditCtrl(props){
                             history.push('/resources');
                         }
                     } else {
-                        setAlertMessage(ret.statusText);
+                        if (ret.data.error){
+                            setAlertMessage(ret.data.error);
+                        } else  {
+                            setAlertMessage(ret.statusText);
+                        }                                               
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
                     setAlertMessage(err.message);
                     setPostingData(false);
                 });
@@ -169,7 +176,7 @@ export default function ResourceEditCtrl(props){
     function renderAlert() {
         return alertMessage !== '' && 
                         (
-                            <div id="alert-div">
+                            <div className="alert-message">
                                 <strong id="alert-message">{alertMessage}</strong>
                             </div>                            
                         );                        

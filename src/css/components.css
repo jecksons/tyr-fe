@@ -183,6 +183,19 @@ div.input-form{
     width: 100%;
 }
 
+div.react-select-container{
+    margin: 5px 0;
+}
+
+div.react-select-container div{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    outline: 0;
+    box-shadow: none;        
+}
+
 div.invalid-input{
     color: red;
     font-weight: bold;
@@ -260,3 +273,15 @@ button.select-add-new:hover{
     color: var(--primary-color-4);
 }
 
+
+div.option-select-img{
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+}
+
+div.option-select-img img{ 
+    height: 24px;
+    width: 24x;
+    margin-right: 5px;
+}

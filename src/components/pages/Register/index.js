@@ -33,7 +33,7 @@ export default function Register(){
                 })
                 .then(() => {
                     if (firebase.getCurrent()) {                                            
-                        history.replace('/');
+                        history.replace('/businesschoose');
                     }
                 }                
                 );

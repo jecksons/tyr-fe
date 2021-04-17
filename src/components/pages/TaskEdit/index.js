@@ -82,50 +82,58 @@ export default function TaskEdit(props){
 
 
     useEffect(() => {
-        api.get('/task_types/available')
+        let isSubscribed = true;
+        api.get(`/task_types/available/?business=${props.userData.businessID}`)
         .then((ret) => {
-            if (ret.status === 200) {
-                let newTypes = [];
 
-                ret.data.forEach((item) => {
-                    newTypes.push(
-                        {
-                            value: item.id,
-                            label: item.name,
-                            location_setting: item.location_setting,
-                            product_setting: item.product_setting,
-                            resource_setting: item.resource_setting,
-                            scheduled_start_setting: item.scheduled_start_setting,
-                            deadline_setting: item.deadline_setting
-                        }
-                    );
-                })
-                setTaskTypes(newTypes);
+            if (ret.status === 200) {
+                if (isSubscribed === true){
+                    let newTypes = [];
+
+                    ret.data.forEach((item) => {
+                        newTypes.push(
+                            {
+                                value: item.id,
+                                label: item.name,
+                                location_setting: item.location_setting,
+                                product_setting: item.product_setting,
+                                resource_setting: item.resource_setting,
+                                scheduled_start_setting: item.scheduled_start_setting,
+                                deadline_setting: item.deadline_setting
+                            }
+                        );
+                    })
+                    setTaskTypes(newTypes);
+                }
+                
             } else {
                 console.log(ret);
             }
         })
         .catch((err) => console.log(err));
 
-        api.get('/resources/?onlyavailables=y')
+        api.get(`/resources/?onlyavailables=y&business=${props.userData.businessID}`)
         .then((ret) => {
             if (ret.status === 200) {
-                let newRes = [];
-                ret.data.forEach((item) => {
-                    newRes.push(
-                        {
-                            value: item.id,
-                            label: item.name
-                        }
-                    );
-                })
-                setAvailableResources(newRes);
+                if (isSubscribed === true){
+                    let newRes = [];
+                    ret.data.forEach((item) => {
+                        newRes.push(
+                            {
+                                value: item.id,
+                                label: item.name
+                            }
+                        );
+                    })
+                    setAvailableResources(newRes);
+                }                
             } else {
                 console.log(ret);
             }
         })
         .catch((err) => console.log(err));    
-    }, []);
+        return () => (isSubscribed = false);
+    }, [props.userData]);
 
     useEffect(() => {                    
         const resetValidation = function() {
@@ -406,7 +414,8 @@ export default function TaskEdit(props){
                 details: editingValues.details,
                 location: editingValues.location,
                 estimated_duration: editingValues.estimated_duration,
-                id_task_type: editingValues.id_task_type
+                id_task_type: editingValues.id_task_type,
+                id_business: props.userData.businessID
             };
             const cfgField = taskReadOnlyValues.task_type;
             if (cfgField.deadline_setting > 0 && editingValues.deadline) {

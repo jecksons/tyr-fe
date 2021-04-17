@@ -9,7 +9,7 @@ import {BsArrowLeftShort, BsArrowRightShort} from 'react-icons/bs';
 const taskPageSize =  5;
 const emptySelectOption = {value: '', label: 'Select...'};
 
-export default function Tasks(){
+export default function Tasks(props){
 
     const [taskItems, setTaskItems] = useState([]);
     const [taskListInfo, setTaskListInfo] = useState({});
@@ -24,8 +24,8 @@ export default function Tasks(){
     useEffect(() => {
         Promise.all(
             [
-                api.get('/tasklist/sortoptions'),
-                api.get('/task_status'),
+                api.get(`/tasklist/sortoptions/`),
+                api.get(`/task_status/?business=${props.userData.businessID}`),
             ]
         ).then((results) => {
             let retSort = results[0].data;
@@ -37,24 +37,21 @@ export default function Tasks(){
             retStatus.unshift(emptySelectOption);
             setTaskStatusItems(retStatus);
         });
-    }, []);
+    }, [props.userData]);
 
     
 
     useEffect(() => {        
-        let getOptions = `?offset=${rowOffset}&limit=${taskPageSize}`;
+        let getOptions = `?offset=${rowOffset}&limit=${taskPageSize}&business=${props.userData.businessID}`;
         if (statusOption !== ''){
             getOptions += `&status=${statusOption}`;            
         }        
         if (sortOption !== ''){
             getOptions += `&sort_by=${sortOption}`;
-        }
-        
+        }        
         api.get(`/tasklist/${getOptions}`)
         .then((ret) => {
             let tableData = [];            
-            console.log(ret.data.metadata);
-
             ret.data.results.forEach((item) => {
                 const data = item;                                                
                 tableData.push( 
@@ -73,7 +70,7 @@ export default function Tasks(){
             setItemsLoaded(true);
         }
         );
-    }, [sortOption, rowOffset, statusOption] );
+    }, [sortOption, rowOffset, statusOption, props.userData] );
 
 
     const handlePagePosition = useCallback((e, next) => {
@@ -84,12 +81,10 @@ export default function Tasks(){
                 if (newOffset < 0) {
                     newOffset = 0;
                 }
-                console.log('setou prior');
                 setRowOffset(newOffset);
             }
         } else {
             if ((taskListInfo.offset + taskPageSize) < taskListInfo.total) {
-                console.log('setou next');
                 setRowOffset(taskListInfo.offset + taskPageSize);
             }
         }

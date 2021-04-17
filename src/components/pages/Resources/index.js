@@ -24,7 +24,7 @@ const resSortOptions = [
     }           
 ];
 
-export default function Resources(){
+export default function Resources(props){
 
 
     const [resourceItems, setResourceItems] = useState([]);
@@ -72,7 +72,7 @@ export default function Resources(){
     }, [sortOrder, sortResItems]);     
     
     useEffect(() => {     
-        api.get('/resourcelist', {
+        api.get(`/resourcelist/?business=${props.userData.businessID}`, {
             params: {
                 onlyavailables: showOnlyAvailables === true ? 'Y' : 'N'
             }
@@ -83,7 +83,7 @@ export default function Resources(){
             handleGetItems(newData);
             setItemsLoaded(true);
         });
-    }, [showOnlyAvailables]) ; // eslint-disable-line react-hooks/exhaustive-deps
+    }, [showOnlyAvailables, props.userData]) ; // eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

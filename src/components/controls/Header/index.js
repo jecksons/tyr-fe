@@ -45,7 +45,7 @@ class Header extends Component {
 
     renderEndLinks(withText) {
         return (
-            <div>
+            <div id="header-end-buttons">
                 <Link  to="/newtask"  id="new-task">
                     {withText === true ? 'New Task' : null}
                     <img src={plus_icon} alt="add-task"></img>
@@ -121,11 +121,17 @@ class Header extends Component {
                             {this.renderNavMain()}
                         </div>
                         <div id="menu-end"  className="menu-end-class">
-                            {this.props.userData.isLogged && (<span>Hi, {this.props.userData.name}!</span>)}
+                            <div id="header-user-info">
+                                {this.props.userData.isLogged && (<h2>Hi, {this.props.userData.name}!</h2>)}
+                                {this.props.userData.isLogged && this.props.userData.businessID > 0 && (<h3>{this.props.userData.businessName}</h3>)}                            
+                            </div>                            
                             {this.renderEndLinks(true)}                                              
                         </div>
                         <div id="menu-end-small" className="menu-end-class">
-                            {this.props.userData.isLogged && (<span>Hi, {this.props.userData.name}!</span>)}
+                            <div id="header-user-info">
+                                {this.props.userData.isLogged && (<h2>{this.props.userData.name}</h2>)}
+                                {this.props.userData.isLogged && this.props.userData.businessID > 0 && (<h3>{this.props.userData.businessName}</h3>)}                            
+                            </div>                            
                             {this.renderEndLinks(false)}                                              
                         </div>
                     </section>                    

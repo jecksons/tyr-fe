@@ -109,8 +109,7 @@ div#task-list-item-detail h3{
         font-size: small;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        
+        flex-wrap: wrap;        
         justify-content: space-between;
     }
 
