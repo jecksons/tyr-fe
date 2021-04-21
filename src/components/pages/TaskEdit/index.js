@@ -4,6 +4,7 @@ import api from '../../../services/api';
 import FormButtons from '../../controls/FormButtons';
 import {FaArrowLeft} from 'react-icons/fa';
 import Select from 'react-select';
+import AsyncSelect from 'react-select/async';
 import {BsFillPlusSquareFill} from 'react-icons/bs';
 import {TiDelete} from 'react-icons/ti';
 import {MdDeleteForever} from 'react-icons/md';
@@ -12,6 +13,9 @@ import MomentUtils from '@date-io/moment';
 import {useHistory} from 'react-router-dom';
 import moment from 'moment';
 import Toast from '../../controls/Toast';
+import PartnerEditModal from '../../controls/PartnerEditModal';
+import ResourceEditModal from '../../controls/ResourceEditModal';
+import ProductEditModal from '../../controls/ProductEditModal';
 
 const DEF_EDIT_VALUES = {
         id: 0,
@@ -22,7 +26,9 @@ const DEF_EDIT_VALUES = {
         estimated_duration: '',
         id_task_type: 0,
         deadline: null,
-        scheduled_start: null
+        scheduled_start: null,
+        id_partner: 0,
+        task_code: ''
     };
 
 const FS_INITIAL = 0;    
@@ -38,7 +44,8 @@ const CAPTION_FIELDS ={
     estimated_duration: 'Duration (in hours)',
     id_task_type: 'Task type',
     deadline: 'Deadline',
-    scheduled_start: 'Scheduled start'   
+    scheduled_start: 'Scheduled start',
+    id_partner: 'Partner'   
 };
 
 export default function TaskEdit(props){
@@ -62,6 +69,14 @@ export default function TaskEdit(props){
     const [alertMessageStatus, setAlertMessageStatus] = useState('');
     const [refreshKey, setRefreshKey] = useState(0);
     const [toastMsg, setToastMsg] = useState('');
+    const [defaultPartners, setDefaultPartners] = useState([]);
+    const [showPartnerDialog, setShowPartnerDialog] = useState(false);
+    const [selPartnerKey, setSelPartnerKey] = useState(0);
+    const [showResourceDialog, setShowResourceDialog] = useState(false);
+    const [resourceDefault, setResourceDefault] = useState(null);
+    const [selProductKey, setSelProductKey] = useState(0);
+    const [defaultProducts, setDefaultProducts] = useState([]);
+    const [showProductDialog, setShowProductDialog] = useState(false);
 
 
     const defSelectStyle = {
@@ -85,7 +100,6 @@ export default function TaskEdit(props){
         let isSubscribed = true;
         api.get(`/task_types/available/?business=${props.userData.businessID}`)
         .then((ret) => {
-
             if (ret.status === 200) {
                 if (isSubscribed === true){
                     let newTypes = [];
@@ -237,7 +251,8 @@ export default function TaskEdit(props){
                         estimated_duration: data.estimated_duration,
                         id_task_type: data.id_task_type,
                         id_task_status: data.id_task_status,
-                        created: data.created                        
+                        created: data.created,
+                        task_code: data.task_code
                     };
                     if (data.location) {
                         newTask.location = data.location;
@@ -260,6 +275,24 @@ export default function TaskEdit(props){
                         })
                         );
                     }
+                    let defPartners = [];
+                    if (data.partner) {
+                        defPartners.push({
+                            value: data.partner.id,
+                            label: data.partner.name
+                        });
+                        newTask.id_partner = data.partner.id;
+                    };
+                    setDefaultPartners(defPartners);
+                    let defProducts = [];
+                    if (data.product) {
+                        defProducts.push({
+                            value: data.product.id,
+                            label: data.product.name
+                        });
+                        newTask.id_product = data.product.id;
+                    };
+                    setDefaultProducts(defProducts);
                     setTaskResources(resItems);                    
                     setTaskReadOnlyValues(
                         {
@@ -330,7 +363,7 @@ export default function TaskEdit(props){
                         {
                             formState === FS_INITIAL ? 'Loading' : 
                                 (
-                                    editingValues.id === 0 ?  'NEW TASK' : `TASK ${editingValues.id}`
+                                    editingValues.id === 0 ?  'NEW TASK' : `TASK ${editingValues.task_code}`
                                 )                    
                         }
                     </strong>                                                               
@@ -370,7 +403,12 @@ export default function TaskEdit(props){
                 keyVal.error = `${nameCap} is required and cannot be empty.`;
                 keyVal.validated = false;
             }                        
-        }  else  if (target.name === 'estimated_duration') {
+        } else  if (target.name === 'id_partner') {
+            if (target.value <= 0) {
+                keyVal.error = `${nameCap} is required and cannot be empty.`;
+                keyVal.validated = false;
+            }                        
+        } else  if (target.name === 'estimated_duration') {
             if (target.value <= 0) {
                 keyVal.error = `${nameCap} is required and cannot be empty.`;
                 keyVal.validated = false;
@@ -415,7 +453,9 @@ export default function TaskEdit(props){
                 location: editingValues.location,
                 estimated_duration: editingValues.estimated_duration,
                 id_task_type: editingValues.id_task_type,
-                id_business: props.userData.businessID
+                id_business: props.userData.businessID,
+                id_user: props.userData.userID,
+                id_partner: editingValues.id_partner,
             };
             const cfgField = taskReadOnlyValues.task_type;
             if (cfgField.deadline_setting > 0 && editingValues.deadline) {
@@ -424,6 +464,9 @@ export default function TaskEdit(props){
             if (cfgField.scheduled_start_setting > 0 && editingValues.scheduled_start) {
                 newTask.scheduled_start = editingValues.scheduled_start;
             }                
+            if (cfgField.product_setting > 0 && editingValues.id_product > 0) {
+                newTask.id_product = editingValues.id_product;
+            }                            
             if (editingValues.id > 0) {
                 newTask.id = editingValues.id;
             }
@@ -446,9 +489,12 @@ export default function TaskEdit(props){
                         setEditingValues({...DEF_EDIT_VALUES});               
                         setSelResKey(selResKey+1);   
                         setSelTaskTypeKey(selTaskTypeKey+1);                               
+                        setDefaultProducts([]);
+                        setDefaultPartners([]);                        
+                        setSelProductKey(selProductKey +1);
+                        setSelPartnerKey(selPartnerKey + 1);
                         setTaskResources([]);
                         resetValidation();                       
-                        setAvailableResources([]);
                         setToastMsg('Successfully saved!');
                     } else if (action === 'saveandcopy') {
                         setEditingValues({...editingValues, id: 0});
@@ -545,7 +591,7 @@ export default function TaskEdit(props){
             configValues.task_type.scheduled_start_setting = 0;
             configValues.task_type.deadline_setting = 0;
         }
-        handleInput({target: {name: 'id_task_type', value: selValue} })
+        handleInput({target: {name: 'id_task_type', value: selValue} });
         setTaskReadOnlyValues(configValues);
     }
 
@@ -560,9 +606,25 @@ export default function TaskEdit(props){
 
     function handleAddNewResource(e){
         e.preventDefault();
-        console.log('clik');
+        setShowResourceDialog(true);
 
     }
+
+    const onCloseResourceDialog =  (newResource) => {
+        setShowResourceDialog(false);
+        if (newResource){
+            const newResourceOption = {
+                value: newResource.id,
+                label: newResource.name
+            };            
+            let newItems = [...availableResources, newResourceOption];
+            setAvailableResources(newItems);
+            setResourceDefault(newResourceOption);
+            const resourceKey =  selResKey + 1;
+            setSelResKey(resourceKey);            
+            handleResource(newResourceOption);
+        }
+    }    
 
     function getResourceSelect() {
         return (
@@ -570,11 +632,103 @@ export default function TaskEdit(props){
                 <div className="select-header">
                     <label className="label-default">Resources</label>
                     <button className="select-add-new" id="add-new-resource" onClick={handleAddNewResource}>Add new</button>
+                    <ResourceEditModal
+                            showDialog={showResourceDialog}
+                            onSuccess={onCloseResourceDialog}
+                            onCancel={onCloseResourceDialog}
+                            userData={props.userData}
+                            />                      
                 </div>                
-                <Select options={availableResources} key={selResKey} name="resource" onChange={handleResource} isClearable={true} styles={defSelectStyle}/>                                 
+                <Select 
+                    options={availableResources} 
+                    key={selResKey} 
+                    name="resource" 
+                    onChange={handleResource} 
+                    isClearable={true} 
+                    styles={defSelectStyle}
+                    defaultValue={resourceDefault}
+                    />                                 
             </div>  
             );               
     }
+
+
+    const loadPartnerOptions = (inputValue, callback) => {        
+        setTimeout(() => {                        
+            api.get(`/partners/taskavailable/?business=${props.userData.businessID}&offset=0&limit=30&searchtext=${inputValue}`)
+            .then((ret) => {                
+                const items = ret.data.results.map((itm) => {
+                    return {
+                        value: itm.id,
+                        label: itm.name
+                    };
+                });
+                callback(items);                
+            });                        
+        }, 2500);
+    }
+
+    const loadProductOptions = (inputValue, callback) => {        
+        setTimeout(() => {                        
+            api.get(`/products/taskavailable/?business=${props.userData.businessID}&offset=0&limit=30&searchtext=${inputValue}`)
+            .then((ret) => {                
+                const items = ret.data.results.map((itm) => {
+                    return {
+                        value: itm.id,
+                        label: itm.name
+                    };
+                });
+                callback(items);                
+            });                        
+        }, 2500);
+    }
+
+    function handlePartner(selectedOption){
+        let selValue = 0;
+        if (selectedOption){
+            selValue = selectedOption.value;
+        }
+        handleInput({target: {name: 'id_partner', value: selValue} });
+    }
+
+    const onClosePartnerDialog =  (newPartner) => {
+        setShowPartnerDialog(false);
+        if (newPartner){
+            const newPartnerOption = {
+                value: newPartner.id,
+                label: newPartner.name
+            };            
+            setDefaultPartners([newPartnerOption]);
+            handlePartner(newPartnerOption);        
+            const partnerKey =  selPartnerKey+1;
+            setSelPartnerKey(partnerKey);
+        }
+    }
+
+    function handleProduct(selectedOption){
+        let selValue = 0;
+        if (selectedOption){
+            selValue = selectedOption.value;
+        }
+        handleInput({target: {name: 'id_product', value: selValue} });
+    }
+
+
+    const onCloseProductDialog =  (newProduct) => {
+        setShowProductDialog(false);
+        if (newProduct){
+            const newOption = {
+                value: newProduct.id,
+                label: newProduct.name
+            };            
+            setDefaultProducts([newOption]);
+            handleProduct(newOption);        
+            const productKey =  selProductKey+1;
+            setSelProductKey(productKey);
+        }
+    }    
+
+
 
 
     function getInputText(name){
@@ -627,7 +781,69 @@ export default function TaskEdit(props){
                 <div className="invalid-input">{formValidation[name].error}</div>        
             </div>  
             );                      
-        } else         
+        } else if (name === 'id_partner') {
+            return (
+                <div className="input-form">
+                    <div className="select-header" >
+                        <label className="label-default">{label}</label>
+                        <button className="select-add-new" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setShowPartnerDialog(true);
+                            }}>Add new</button>
+                        <PartnerEditModal
+                            showDialog={showPartnerDialog}
+                            onSuccess={onClosePartnerDialog}
+                            onCancel={onClosePartnerDialog}
+                            userData={props.userData}
+                            />  
+                    </div>                                  
+                    <AsyncSelect 
+                        cacheOptions
+                        loadOptions={loadPartnerOptions}
+                        defaultOptions
+                        className="react-select-container"
+                        name={name}
+                        key={selPartnerKey}
+                        isClearable
+                        defaultValue={defaultPartners.length > 0 ? defaultPartners[0] : null}
+                        onChange={handlePartner}
+                    />                                                     
+                    <div className="invalid-input">{formValidation[name].error}</div>        
+                </div>  
+                );                 
+        } else if (name === 'id_product') {
+            return (
+                <div className="input-form">
+                    <div className="select-header" >
+                        <label className="label-default">{label}</label>
+                        <button className="select-add-new" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setShowProductDialog(true);
+                            }}>Add new</button>
+                        <ProductEditModal
+                            showDialog={showProductDialog}
+                            onSuccess={onCloseProductDialog}
+                            onCancel={onCloseProductDialog}
+                            userData={props.userData}
+                            />  
+                    </div>                                  
+                    <AsyncSelect 
+                        cacheOptions
+                        loadOptions={loadProductOptions}
+                        defaultOptions
+                        className="react-select-container"
+                        name={name}
+                        key={selProductKey}
+                        isClearable
+                        defaultValue={defaultProducts.length > 0 ? defaultProducts[0] : null}
+                        onChange={handleProduct}
+                    />                                                     
+                    <div className="invalid-input">{formValidation[name].error}</div>        
+                </div>  
+                );                 
+        }   else
         return (
             <div className="input-form">
                 <label className="label-default">{label}</label>
@@ -651,7 +867,8 @@ export default function TaskEdit(props){
                     name: selectedResource.label
                 };
                 setTaskResources([...taskResources, newRes]);
-                setSelResKey(selResKey+1) ;
+                setResourceDefault(null);
+                setSelResKey(selResKey+1);
             }            
         }
     }
@@ -662,8 +879,6 @@ export default function TaskEdit(props){
         newRes = newRes.filter((res) => res.id !== item.id);
         setTaskResources(newRes);
     }
-
-
 
     function renderResources(){
         if (taskResources.length > 0) {
@@ -832,6 +1047,7 @@ export default function TaskEdit(props){
                             renderInfoTaskTop()
                         }                            
                         {getInputText('name')}
+                        {getInputText('id_partner')}
                     </section>
                     <section >
                         <strong>What will be made</strong>
@@ -898,7 +1114,7 @@ export default function TaskEdit(props){
                             {renderTimeline()}
                         </div>
                     )
-                }                
+                }                   
             </div>
         )
     }

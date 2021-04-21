@@ -54,13 +54,16 @@ export default function Tasks(props){
             let tableData = [];            
             ret.data.results.forEach((item) => {
                 const data = item;                                                
-                tableData.push( 
+                tableData.push(                     
                     {
-                        id: data.id,
+                        id: data.id,                        
                         title: data.name,
                         location: data.location,
                         status: data.task_status,
                         who: data.resources,
+                        task_code: data.task_code,
+                        product: data.product_name,
+                        partner: data.partner_name,
                         when: (new Date(data.deadline))
                     }
                 );
@@ -136,10 +139,12 @@ export default function Tasks(props){
                             }}>
                             <div id="task-list-item-header">                                
                                 <h2>{itm.title}</h2>
-                                <h2  id="task-id">{itm.id}</h2>
+                                <h2  id="task-id">{itm.task_code}</h2>
                             </div>
                             <div id="task-list-item-detail">
-                                <h3>{`Location: ${itm.location}`}</h3>
+                                <h3>{itm.partner}</h3>
+                                {itm.location && <h3>{`Location: ${itm.location}`}</h3>}                                
+                                {itm.product && <h3>{`Product: ${itm.product}`}</h3>}                                                                
                                 <h3>{itm.status}</h3>
                                 <h3>{moment(itm.when).format('llll')}</h3>                                                                        
                                 <h3>{itm.who}</h3>

@@ -42,6 +42,11 @@ form#edit-task div.invalid-input{
 }
 
 
+button.select-add-new{
+    margin-top: 1rem;
+}
+
+
 form#edit-task div.input-form-dates{
     display: flex;
     flex-direction: column;
@@ -79,16 +84,9 @@ button.btn-form-full svg{
     color: #272727;
 }
 
-
 button.btn-form-full svg:hover{        
     color:  #8a8a8a;
 }
-
-
-div#resources-header button#add-new-resource{
-    margin-top: 1rem;
-}
-
 
 
 div#resources-header button#btn-add-resource{
